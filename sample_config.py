@@ -1,5 +1,5 @@
 name = "test"
-location = "westus"  # run `az account list-locations` to see all locations
+location = "westus3"  # run `az account list-locations` to see all locations
 environment = "development"  # development, staging or production
 suffix = "001"
 resource_group = f"rg-{name}-{environment}-{location}-{suffix}"
