@@ -28,21 +28,20 @@ def is_object(list_cmd: str, name: str) -> bool:
     location = config.location
     for item in result:
         # if item doesn't have a "location" key, use the config.location as default
-        if item.get("location", location) == "location" and item["name"] == name:
+        if item.get("location", location) == location and item["name"] == name:
             return True
 
     return False
 
 
 is_resource_group = functools.partial(is_object, "group list")
-is_vnet = functools.partial(is_object, "network vnet list")
-is_cluster = functools.partial(is_object, "aks list")
+is_vnet = functools.partial(is_object, f"network vnet list -g {config.resource_group}")
+is_cluster = functools.partial(is_object, f"aks list -g {config.resource_group}")
 is_subnet = functools.partial(
     is_object,
     f"""network vnet subnet list 
-                                             -g {config.resource_group}
-                                             --vnet {config.vnet["name"]}
-""",
+          -g {config.resource_group}
+          --vnet {config.vnet["name"]}""",
 )
 
 
@@ -79,7 +78,7 @@ def create_vnet():
 def create_subnets():
     """Create the nodes and pods subnets"""
     for subnet_type in ("nodes", "pods"):
-        name = f"subnet-{subnet_type}"
+        name = f"subnet-{config.name}-{subnet_type}"
         if is_subnet(name):
             print(f"Subnet {name} already exists")
             return

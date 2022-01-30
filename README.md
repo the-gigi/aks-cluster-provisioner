@@ -55,7 +55,7 @@ Follow the instructions here:
 You also need to run this command to allow enabling CSI drivers:
 
 ```
-$ az feature register --namespace "Microsoft.ContainerService" --name "EnableAzureDiskFileCSIDriver"
+az feature register --namespace "Microsoft.ContainerService" --name "EnableAzureDiskFileCSIDriver"
 ```
 
 This takes a few minutes. Verify the registration was successful by running:
@@ -73,7 +73,7 @@ modify as necessary.
 Then run:
 
 ```
-poetry python run aks_cluster_provisioner.py
+poetry run python aks_cluster_provisioner.py
 ```
 
 The program will create a resource group, VNet, subnets and the cluster itself.
